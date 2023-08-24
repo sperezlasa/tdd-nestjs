@@ -2,6 +2,10 @@
 /dist
 /node_modules
 
+.token
+coveralls.exe
+SQLite3.dll
+
 # Logs
 logs
 *.log
