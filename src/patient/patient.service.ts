@@ -18,7 +18,7 @@ export class PatientService {
             id:this.nextId++,
             name: patientInput.name
         };
-        this.patients.push(newPatient);
+        this.patients.push(newPatient);   
         return newPatient; 
     }
 
