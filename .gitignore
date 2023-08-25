@@ -21,6 +21,7 @@ lerna-debug.log*
 # Tests
 /.coverage
 /.nyc_output
+app.controller.spec
 
 # IDEs and editors
 /.idea
