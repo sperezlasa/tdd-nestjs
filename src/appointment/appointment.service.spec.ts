@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PatientService } from '../patient/patient.service';
 import { PatientModule } from '../patient/patient.module'
 import { AppointmentService } from './appointment.service';
+import { createDateFromString } from '../helpers/create_date.helper';
 
 
 describe('AppointmentService', () => {
@@ -27,8 +28,8 @@ describe('AppointmentService', () => {
   });
 
   it('should schedule an unconfirmed appointment for a user on success', async () => {
-    const startTime = new Date('2022-01-01T14:00:00Z');
-    const endTime = new Date('2022-01-01T15:00:00Z');
+    const startTime = createDateFromString('2022-01-01T14:00:00Z');
+    const endTime = createDateFromString('2022-01-01T15:00:00Z');
 
     const { id: patientId } = await patientService.register({
       name: 'John Doe',
@@ -52,8 +53,8 @@ describe('AppointmentService', () => {
   
 
   it('should throw an error when end time is before start time', async () => {
-    const startTime = new Date('2022-01-01T14:00:00Z');
-    const endTime = new Date('2022-01-01T13:00:00Z');
+    const startTime = createDateFromString('2022-01-01T14:00:00Z');
+    const endTime = createDateFromString('2022-01-01T13:00:00Z');
     /**
      * We have to wrap our "scheduleAppointment" function in another arrow function
      * because we expect an error to be thrown. If we don't do that,
@@ -74,8 +75,8 @@ describe('AppointmentService', () => {
 
 
   it('should throw an error when end time is equial to start time', async ()=>{
-    const startTime = new Date('2022-01-01T14:00:00Z');
-    const endTime = new Date('2022-01-01T14:00:00Z');
+    const startTime = createDateFromString('2022-01-01T14:00:00Z');
+    const endTime = createDateFromString('2022-01-01T14:00:00Z');
 
 
     await expect(()=> service.scheduleAppointment({
@@ -87,8 +88,8 @@ describe('AppointmentService', () => {
   })
 
   it('should throw an error when end time is in the next day', async ()=>{
-    const startTime = new Date('2022-01-01T14:00:00Z');
-    const endTime = new Date('2022-01-02T00:00:00Z');
+    const startTime = createDateFromString('2022-01-01T14:00:00Z');
+    const endTime = createDateFromString('2022-01-02T00:00:00Z');
 
    await expect(()=>service.scheduleAppointment({
       patientId: 1,
@@ -99,8 +100,8 @@ describe('AppointmentService', () => {
   })
 
   it('should throw an error when end time is in same day and hour of next month', async () => {
-    const startTime = new Date('2022-01-01T14:00:00Z');
-    const endTime = new Date('2022-02-01T14:00:00Z');
+    const startTime = createDateFromString('2022-01-01T14:00:00Z');
+    const endTime = createDateFromString('2022-02-01T14:00:00Z');
     await expect(() =>
       service.scheduleAppointment({
         patientId: 1,
@@ -114,8 +115,8 @@ describe('AppointmentService', () => {
 
 
   it('should throw an error when end time is in same day, hour and month of the next year', async () => {
-    const startTime = new Date('2022-01-01T14:00:00Z');
-    const endTime = new Date('2023-01-01T14:00:00Z');
+    const startTime = createDateFromString('2022-01-01T14:00:00Z');
+    const endTime = createDateFromString('2023-01-01T14:00:00Z');
     await expect(() =>
       service.scheduleAppointment({
         patientId: 1,
@@ -130,8 +131,8 @@ describe('AppointmentService', () => {
 
 
   it('should throw an error when the patient does not exist', async () => {
-    const startTime = new Date('2022-01-01T14:00:00Z');
-    const endTime = new Date('2022-01-01T15:00:00Z');
+    const startTime = createDateFromString('2022-01-01T14:00:00Z');
+    const endTime = createDateFromString('2022-01-01T15:00:00Z');
 
     await expect(service.scheduleAppointment(
       {patientId: 1,
