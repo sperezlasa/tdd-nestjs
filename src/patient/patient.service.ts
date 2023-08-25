@@ -19,7 +19,7 @@ export class PatientService {
             name: patientInput.name
         };
         this.patients.push(newPatient);
-        return newPatient;
+        return newPatient; 
     }
 
     async doesPatientExist(patientId: number):Promise<boolean>{
